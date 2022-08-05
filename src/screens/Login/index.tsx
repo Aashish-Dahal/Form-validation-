@@ -1,11 +1,12 @@
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Button} from '../../components/atoms/Button';
 import {GradientBox} from '../../components/atoms/GradientBox';
 import {TextInput} from '../../components/atoms/TextInput';
 import {THEME} from '../../theme';
+import {AuthContext} from '../../lib/auth/AuthContext';
 export const Login = () => {
   const loginValidationSchema = yup.object({
     email: yup
@@ -17,6 +18,7 @@ export const Login = () => {
       .min(8, ({min}) => `Password must be at least ${min} characters`)
       .required('Password is required'),
   });
+  const {login} = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View style={styles.position}>
@@ -32,7 +34,7 @@ export const Login = () => {
         <Formik
           validationSchema={loginValidationSchema}
           initialValues={{email: '', password: ''}}
-          onSubmit={values => console.log(values)}>
+          onSubmit={values => login(values.email, values.password)}>
           {({
             handleChange,
             handleBlur,
