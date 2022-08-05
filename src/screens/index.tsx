@@ -9,7 +9,7 @@ import {Home} from './Home';
 
 const Stack = createStackNavigator();
 export const Screens = () => {
-  const {loggedIn} = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -17,7 +17,7 @@ export const Screens = () => {
           backgroundColor: THEME.colors.white,
         },
       }}>
-      {!loggedIn ? (
+      {token == 'null' ? (
         <Stack.Group screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
