@@ -1,12 +1,14 @@
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Button} from '../../components/atoms/Button';
 import {GradientBox} from '../../components/atoms/GradientBox';
 import {TextInput} from '../../components/atoms/TextInput';
 import {THEME} from '../../theme';
+import {AuthContext} from '../../lib/auth/AuthContext';
 export const Register = () => {
+  const {register} = useContext(AuthContext);
   const registerValidationSchema = yup.object({
     username: yup
       .string()
@@ -45,7 +47,9 @@ export const Register = () => {
             username: '',
             confirmPassword: '',
           }}
-          onSubmit={values => console.log(values)}>
+          onSubmit={values =>
+            register(values.username, values.email, values.password)
+          }>
           {({
             handleChange,
             handleBlur,
